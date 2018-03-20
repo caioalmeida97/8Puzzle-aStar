@@ -10,6 +10,7 @@ import java.util.List;
 public class aStarTest {
 
     public static void main(String[] args) {
+        //int[][] m = {{1,2,3},{4,5,6},{0,7,8}};
         PuzzleNode root = new PuzzleNode(null, new PuzzleState(), 0);
         aStarTest a = new aStarTest();
         Node n = a.aStar(root);

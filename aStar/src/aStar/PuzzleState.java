@@ -33,7 +33,7 @@ public class PuzzleState extends State {
     //Checks if the puzzle is goal or not
     @Override
     public boolean isGoal() {
-        int[][] goal = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+        int[][] goal = {{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
         int count = 0;
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle[0].length; j++) {
