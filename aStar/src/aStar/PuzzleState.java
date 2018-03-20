@@ -20,7 +20,13 @@ public class PuzzleState extends State {
     //For the 1st state instance
     public PuzzleState() {
         this.description = "Initial State";
-        puzzle = generate();
+        do {
+            System.out.println("Sorting puzzle...");
+            puzzle = generate();
+            //printPuzzle(puzzle);
+        } while (!isSolvable());
+        System.out.println("Solvable puzzle sorted!");
+        printPuzzle();
         this.h = h();
     }
 
@@ -33,7 +39,7 @@ public class PuzzleState extends State {
     //Checks if the puzzle is goal or not
     @Override
     public boolean isGoal() {
-        int[][] goal = {{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
+        int[][] goal = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
         int count = 0;
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle[0].length; j++) {
@@ -47,12 +53,11 @@ public class PuzzleState extends State {
 
     //Generates a random puzzle
     public int[][] generate() {
-        List<Integer> numbers = new ArrayList<>();
         int[][] puzzle = new int[3][3];
+        List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             numbers.add(i);
         }
-
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle[0].length; j++) {
                 int random = (int) (Math.random() * (numbers.size()));
@@ -60,6 +65,55 @@ public class PuzzleState extends State {
             }
         }
         return puzzle;
+    }
+
+    public boolean isSolvable() {
+        int n = puzzle.length;
+        int[] arr = new int[(int) Math.pow(n, 2)];
+        int s = 0;
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                arr[s] = puzzle[j][k];
+                s++;
+            }
+
+        }
+
+        int inversion = 0;
+
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+
+                if (arr[i] > arr[j]) {
+                    inversion++;
+                }
+
+            }
+
+        }
+
+        if (n % 2 != 0) { // GRID IS ODD
+            if (inversion % 2 == 0) { // INVERSION IS EVEN
+                return true;
+            }
+
+        } else if (n % 2 == 0) { //GRID IS EVEN
+            int i = 0;
+            int j = 0;
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++) {
+                    if (this.puzzle[i][j] == Math.pow(n, 2)) {
+                        if (i % 2 == 0 && inversion % 2 != 0 || i % 2 != 0 && i % 2 != 0 && inversion % 2 == 0) {
+                            return true;
+                        }
+                    }
+
+                }
+
+            }
+        }
+        return false;
+
     }
 
     public double h() {
@@ -91,9 +145,9 @@ public class PuzzleState extends State {
     }
 
     public List<State> expand() {
-        int[] zeroPos = new int[2];
-        List<State> nextStates = new ArrayList<>();
 
+        List<State> nextStates = new ArrayList<>();
+        int[] zeroPos = new int[2];
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle[0].length; j++) {
                 if (puzzle[i][j] == 0) {
@@ -103,31 +157,27 @@ public class PuzzleState extends State {
             }
         }
 
-        int newPuzzle[][] = new int [puzzle.length][puzzle[0].length];
+        int newPuzzle[][] = new int[puzzle.length][puzzle[0].length];
         //Move Right
         if (zeroPos[1] >= 0 && zeroPos[1] < this.puzzle.length - 1) {
-//            System.out.println("I'll move RIGHT!");
             newPuzzle = move(zeroPos, puzzle, Direction.RIGHT);
             nextStates.add(new PuzzleState(newPuzzle, "Moved RIGHT"));
         }
 
         //Move Left
         if (zeroPos[1] > 0 && zeroPos[1] <= this.puzzle.length - 1) {
-//            System.out.println("I'll move LEFT!");
             newPuzzle = move(zeroPos, puzzle, Direction.LEFT);
             nextStates.add(new PuzzleState(newPuzzle, "Moved LEFT"));
         }
 
         //Move Up
         if (zeroPos[0] > 0 && zeroPos[0] <= this.puzzle.length - 1) {
-//            System.out.println("I'll move UP!");
             newPuzzle = move(zeroPos, puzzle, Direction.UP);
             nextStates.add(new PuzzleState(newPuzzle, "Moved UP"));
         }
 
         //Move Down
         if (zeroPos[0] >= 0 && zeroPos[0] < this.puzzle.length - 1) {
-//            System.out.println("I'll move DOWN!");
             newPuzzle = move(zeroPos, puzzle, Direction.DOWN);
             nextStates.add(new PuzzleState(newPuzzle, "Moved DOWN"));
         }
@@ -183,7 +233,7 @@ public class PuzzleState extends State {
         }
         System.out.println("+-----------------+");
     }
-    
+
     public void printPuzzle() {
         System.out.println("+-----------------+");
         for (int i = 0; i < puzzle.length; i++) {

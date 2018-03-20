@@ -10,25 +10,14 @@ import java.util.List;
 public class aStarTest {
 
     public static void main(String[] args) {
-        //int[][] m = {{1,2,3},{4,5,6},{0,7,8}};
+        //int[][] m = {{1,2,3},{4,5,6},{7,8,0}};
         PuzzleNode root = new PuzzleNode(null, new PuzzleState(), 0);
         aStarTest a = new aStarTest();
         Node n = a.aStar(root);
-        if(n != null){
+        System.out.println("FINISHED!!");
+        if (n != null) {
             n.printPath();
         }
-//        System.out.println("Printing path...");
-//        test.printPath();
-////        puzzleTest.printPuzzle();
-//        System.out.println(((PuzzleState) test.state).h);
-//        System.out.println("These are the following nodes:");
-//        List<Node> successors = test.successors();
-//        for (Node node : successors) {
-//            PuzzleNode currentNode = (PuzzleNode) node;
-//            currentNode.toString();
-//            System.out.println("The f value is : " + currentNode.f());
-//        }
-
     }
 
     public Node aStar(Node root) {
@@ -46,8 +35,10 @@ public class aStarTest {
                     int fsize = fringe.size(); //This avoids endless for
                     for (int i = 0; i < fsize; i++) {
                         PuzzleNode indexNode = (PuzzleNode) fringe.get(i);
-                        if (((PuzzleNode) suc).f() < ((PuzzleNode) indexNode).f()) {
-                            fringe.add(i, suc);
+                        if (((PuzzleNode) suc).f() <= ((PuzzleNode) indexNode).f()) {
+                            if (!fringe.contains(suc)) {
+                                fringe.add(i, suc);
+                            }
                         }
                     }
                     if (!fringe.contains(suc)) {

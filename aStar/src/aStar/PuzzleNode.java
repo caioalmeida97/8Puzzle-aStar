@@ -33,4 +33,18 @@ public class PuzzleNode extends Node {
         return String.format("%s", state.toString());
     }
 
+    @Override
+    public boolean equals(Object node) {
+        PuzzleState pz1 = (PuzzleState) ((PuzzleNode) node).state;
+        PuzzleState currentState = (PuzzleState) state;
+        int count = 0;
+        for (int i = 0; i < currentState.puzzle.length; i++) {
+            for (int j = 0; j < currentState.puzzle[0].length; j++) {
+                if (pz1.puzzle[i][j] == currentState.puzzle[i][j]) {
+                    count++;
+                }
+            }
+        }
+        return (count == (currentState.puzzle.length * currentState.puzzle[0].length));
+    }
 }
