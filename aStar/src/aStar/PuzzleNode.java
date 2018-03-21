@@ -30,7 +30,8 @@ public class PuzzleNode extends Node {
 
     @Override
     public String toString() {
-        return String.format("%s", state.toString());
+        return String.format("[%s, f:%2.0f, g:%2.0f, h:%2.0f]", state.toString(), f(), cost, ((PuzzleState)state).h);        
+        
     }
 
     @Override
@@ -45,6 +46,7 @@ public class PuzzleNode extends Node {
                 }
             }
         }
-        return (count == (currentState.puzzle.length * currentState.puzzle[0].length));
+        return (count == (currentState.puzzle.length * currentState.puzzle[0].length)
+                && ((PuzzleNode)node).f() == f());
     }
 }

@@ -47,6 +47,14 @@ public class aStarTest {
                 }
             }
 
+            System.out.println("\nI'm about to print the fringe...");
+            int i = 0;
+            for (Node debug : fringe) {
+                System.out.print(i + ": " + debug.toString() + " | ");
+                i++;
+            }
+            System.out.println("\nPrinted fringe!!");
+
         } while (true);
 
     }

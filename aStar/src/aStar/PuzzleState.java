@@ -215,6 +215,20 @@ public class PuzzleState extends State {
         }
         return copy;
     }
+    
+    public Direction whereToGo(int [] zeroPos){
+        if (zeroPos[1] >= 0 && zeroPos[1] < this.puzzle.length - 1)
+            return Direction.RIGHT;
+        else if (zeroPos[1] > 0 && zeroPos[1] <= this.puzzle.length - 1) 
+            return Direction.LEFT;
+        else if (zeroPos[0] > 0 && zeroPos[0] <= this.puzzle.length - 1)
+            return Direction.UP;
+        else if (zeroPos[0] >= 0 && zeroPos[0] < this.puzzle.length - 1) 
+            return Direction.DOWN;
+        else
+            return null;
+        
+    }
 
     //Prints the puzzle
     public void printPuzzle(int[][] puzzle) {
@@ -253,8 +267,18 @@ public class PuzzleState extends State {
 
     @Override
     public String toString() {
-        printPuzzle();
-        return this.description;
+        //printPuzzle();
+        return printSequence();
+    }
+    
+    public String printSequence(){
+        String ret = "";
+        for(int i = 0; i< puzzle.length; i++){
+            for(int j = 0; j < puzzle[0].length; j++){
+                ret += puzzle[i][j] + " ";
+            }
+        }
+        return ret;
     }
 
 }
