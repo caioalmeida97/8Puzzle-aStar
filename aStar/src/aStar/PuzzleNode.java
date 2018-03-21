@@ -30,7 +30,8 @@ public class PuzzleNode extends Node {
 
     @Override
     public String toString() {
-        return String.format("[%s, f:%2.0f, g:%2.0f, h:%2.0f]", state.toString(), f(), cost, ((PuzzleState)state).h);        
+        PuzzleState st = (PuzzleState) state;
+        return String.format("%s\n[f:%2.0f, g:%2.0f, h:%2.0f, %s]", state.toString(), f(), cost, st.h, st.description);
         
     }
 

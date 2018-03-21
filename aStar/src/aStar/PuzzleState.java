@@ -20,13 +20,10 @@ public class PuzzleState extends State {
     //For the 1st state instance
     public PuzzleState() {
         this.description = "Initial State";
-//        do {
-            System.out.println("Sorting puzzle...");
-            puzzle = generate();
-            //printPuzzle(puzzle);
-//        } while (!isSolvable());
+        System.out.println("Sorting puzzle...");
+        puzzle = generate();
         System.out.println("Solvable puzzle sorted!");
-        printPuzzle();
+        printPuzzle(puzzle);
         this.h = h();
     }
 
@@ -55,8 +52,8 @@ public class PuzzleState extends State {
     public int[][] generate() {
         int[][] puzzle = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
         int[] zeroPos = new int[2];
-        
-        int scrambles = 1000;
+
+        int scrambles = 100;
         for (int i = 0; i < scrambles; i++) {
 
             //Looking for zero position...
@@ -84,7 +81,6 @@ public class PuzzleState extends State {
                     case 3:
                         dir = Direction.DOWN;
                         break;
-
                 }
             } while (!canIGo(dir, zeroPos));
             puzzle = move(zeroPos, puzzle, dir);
@@ -174,7 +170,7 @@ public class PuzzleState extends State {
 
         List<State> nextStates = new ArrayList<>();
         int[] zeroPos = new int[2];
-        
+
         //Getting the zero position in order to get the possible moves
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle[0].length; j++) {
@@ -186,36 +182,38 @@ public class PuzzleState extends State {
         }
 
         List<Direction> moves = whereToGo(zeroPos);
-        
+
         int newPuzzle[][] = new int[puzzle.length][puzzle[0].length]; //Has the same size as the original puzzle
         //Move Right
         if (moves.contains(Direction.RIGHT)) {
             newPuzzle = move(zeroPos, puzzle, Direction.RIGHT);
-            nextStates.add(new PuzzleState(newPuzzle, "Moved RIGHT"));
+            nextStates.add(new PuzzleState(newPuzzle, "RIGHT"));
         }
 
         //Move Left
         if (moves.contains(Direction.LEFT)) {
             newPuzzle = move(zeroPos, puzzle, Direction.LEFT);
-            nextStates.add(new PuzzleState(newPuzzle, "Moved LEFT"));
+            nextStates.add(new PuzzleState(newPuzzle, "LEFT"));
         }
 
         //Move Up
         if (moves.contains(Direction.UP)) {
             newPuzzle = move(zeroPos, puzzle, Direction.UP);
-            nextStates.add(new PuzzleState(newPuzzle, "Moved UP"));
+            nextStates.add(new PuzzleState(newPuzzle, "UP"));
         }
 
         //Move Down
         if (moves.contains(Direction.DOWN)) {
             newPuzzle = move(zeroPos, puzzle, Direction.DOWN);
-            nextStates.add(new PuzzleState(newPuzzle, "Moved DOWN"));
+            nextStates.add(new PuzzleState(newPuzzle, "DOWN"));
         }
         return nextStates;
     }
 
     public int[][] move(int[] zeroPos, int[][] puzzle, Direction direction) {
-        int[][] copy = new int[puzzle.length][puzzle[0].length]; //Creates a copy so that the original puzzle does not change
+
+        //Creates a copy so that the original puzzle does not change
+        int[][] copy = new int[puzzle.length][puzzle[0].length];
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle[0].length; j++) {
                 copy[i][j] = puzzle[i][j];
@@ -246,7 +244,8 @@ public class PuzzleState extends State {
         return copy;
     }
 
-    public List<Direction> whereToGo(int[] zeroPos) {//Possible moves obtained by the position of the zero
+    //Possible moves obtained by the position of the zero
+    public List<Direction> whereToGo(int[] zeroPos) {
         List<Direction> directions = new ArrayList();
         if (zeroPos[1] >= 0 && zeroPos[1] < this.puzzle.length - 1) {
             directions.add(Direction.RIGHT);
@@ -264,7 +263,8 @@ public class PuzzleState extends State {
         return directions;
     }
 
-    public boolean canIGo(Direction dir, int[] zeroPos) { //Returns if the move is possible or not
+    //Returns if the move is possible or not
+    public boolean canIGo(Direction dir, int[] zeroPos) {
         switch (dir) {
             case RIGHT:
                 return (zeroPos[1] >= 0 && zeroPos[1] < this.puzzle.length - 1);
@@ -278,7 +278,8 @@ public class PuzzleState extends State {
         return false;
     }
 
-    public void printPuzzle(int [][] puzzle) { //Prints any puzzle
+    //Prints any puzzle
+    public void printPuzzle(int[][] puzzle) {
         System.out.println("+-----------------+");
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle.length; j++) {
@@ -295,7 +296,8 @@ public class PuzzleState extends State {
         System.out.println("+-----------------+");
     }
 
-    public void printPuzzle() { //Prints the original puzzle
+    //Prints the original puzzle
+    public String printPuzzle() {
         String ret = "";
         ret += "+-----------------+\n";
         for (int i = 0; i < puzzle.length; i++) {
@@ -311,15 +313,16 @@ public class PuzzleState extends State {
             ret += "\n";
         }
         ret += "+-----------------+";
-        System.out.println(ret);
+        return ret;
+//        System.out.println(ret);
     }
 
     @Override
     public String toString() {
-//        printPuzzle();
-        return printSequence();
+        return printPuzzle();
     }
 
+    //Prints the puzzle as a vector
     public String printSequence() {
         String ret = "";
         for (int i = 0; i < puzzle.length; i++) {

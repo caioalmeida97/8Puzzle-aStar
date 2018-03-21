@@ -19,13 +19,14 @@ public abstract class Node {
     public abstract List<Node> successors();
 
     public void printPath() {
-        System.out.println(this);
         if (parent != null) {
             parent.printPath();
         }
+        System.out.println(this);
+
     }
 
-    public double getCost(){
+    public double getCost() {
         return this.cost;
     }
 }

@@ -14,10 +14,12 @@ public class aStarTest {
         PuzzleNode root = new PuzzleNode(null, new PuzzleState(), 0);
         aStarTest a = new aStarTest();
         Node n = a.aStar(root);
-        System.out.println("FINISHED!!");
         if (n != null) {
+            System.out.println("\nThe path is listed below :)");
             n.printPath();
         }
+        System.out.println("FINISHED!!");
+
     }
 
     public Node aStar(Node root) {
@@ -27,7 +29,7 @@ public class aStarTest {
         do {
             Node node = fringe.remove(0);
             if (node.state.isGoal()) {
-                System.out.println("The solution is: " + node.toString());
+                System.out.println("The solution is: \n" + node.toString());
                 return node;
             } else {
                 List<Node> successors = node.successors();
@@ -54,7 +56,6 @@ public class aStarTest {
 //                i++;
 //            }
 //            System.out.println("\nPrinted fringe!!");
-
         } while (true);
 
     }
