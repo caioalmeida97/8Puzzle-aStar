@@ -7,12 +7,12 @@ import java.util.List;
  *
  * @author caio
  */
-public class aStarTest {
+public class AStarTest {
 
     public static void main(String[] args) {
         //int[][] m = {{1,2,3},{4,5,6},{7,8,0}};
         PuzzleNode root = new PuzzleNode(null, new PuzzleState(), 0);
-        aStarTest a = new aStarTest();
+        AStarTest a = new AStarTest();
         Node n = a.aStar(root);
         if (n != null) {
             System.out.println("\nThe path is listed below :)");
@@ -48,14 +48,6 @@ public class aStarTest {
                     }
                 }
             }
-
-//            System.out.println("\nI'm about to print the fringe...");
-//            int i = 0;
-//            for (Node debug : fringe) {
-//                System.out.print(i + ": " + debug.toString() + " | ");
-//                i++;
-//            }
-//            System.out.println("\nPrinted fringe!!");
         } while (true);
 
     }
