@@ -17,7 +17,7 @@ public class PuzzleState extends State {
     String description;
     double h;
 
-    //For the 1st state instance
+    //Constructor for the 1st state instance of puzzle
     public PuzzleState() {
         this.description = "Initial State";
         System.out.println("Sorting puzzle...");
@@ -27,6 +27,7 @@ public class PuzzleState extends State {
         this.h = h();
     }
 
+    //Constructor to create new PuzzleStates in expand() method
     public PuzzleState(int[][] puzzle, String description) {
         this.puzzle = puzzle;
         this.description = description;
@@ -53,6 +54,7 @@ public class PuzzleState extends State {
         int[][] puzzle = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
         int[] zeroPos = new int[2];
 
+        //Variable scrambles indicates the number of moves to scramble the puzzle
         int scrambles = 100;
         for (int i = 0; i < scrambles; i++) {
 
@@ -89,37 +91,24 @@ public class PuzzleState extends State {
         return puzzle;
     }
 
+    //Tests if the puzzle generated is solvable or not
     public boolean isSolvable() {
-        int n = puzzle.length;
+        int n = puzzle.length, s = 0, inversion = 0;
         int[] arr = new int[(int) Math.pow(n, 2)];
-        int s = 0;
         for (int j = 0; j < n; j++) {
             for (int k = 0; k < n; k++) {
                 arr[s] = puzzle[j][k];
                 s++;
             }
-
         }
-
-        int inversion = 0;
-
         for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-
-                if (arr[i] > arr[j]) {
-                    inversion++;
-                }
-
-            }
-
+            for (int j = i + 1; j < arr.length; j++)
+                if (arr[i] > arr[j]) inversion++;
         }
 
-        if (n % 2 != 0) { // GRID IS ODD
-            if (inversion % 2 == 0) { // INVERSION IS EVEN
-                return true;
-            }
-
-        } else if (n % 2 == 0) { //GRID IS EVEN
+        if (n % 2 != 0) // GRID IS ODD
+            if (inversion % 2 == 0) return true; // INVERSION IS EVEN
+        else if (n % 2 == 0) { //GRID IS EVEN
             int i = 0;
             int j = 0;
             for (i = 0; i < n; i++) {
@@ -129,13 +118,10 @@ public class PuzzleState extends State {
                             return true;
                         }
                     }
-
                 }
-
             }
         }
         return false;
-
     }
 
     public double h() {
