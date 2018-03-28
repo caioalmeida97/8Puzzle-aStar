@@ -168,8 +168,10 @@ public class PuzzleState extends State {
         }
 
         List<Direction> moves = whereToGo(zeroPos);
-
-        int newPuzzle[][] = new int[puzzle.length][puzzle[0].length]; //Has the same size as the original puzzle
+        
+        //Has the same size as the original puzzle
+        int newPuzzle[][] = new int[puzzle.length][puzzle[0].length];
+        
         //Move Right
         if (moves.contains(Direction.RIGHT)) {
             newPuzzle = move(zeroPos, puzzle, Direction.RIGHT);
@@ -205,7 +207,6 @@ public class PuzzleState extends State {
                 copy[i][j] = puzzle[i][j];
             }
         }
-
         int aux = copy[zeroPos[0]][zeroPos[1]];
         switch (direction) {
             case RIGHT:
