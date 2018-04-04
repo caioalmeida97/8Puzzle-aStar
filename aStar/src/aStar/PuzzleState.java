@@ -55,7 +55,7 @@ public class PuzzleState extends State {
         int[] zeroPos = new int[2];
 
         //Variable scrambles indicates the number of moves to scramble the puzzle
-        int scrambles = 100;
+        int scrambles = 10000;
         for (int i = 0; i < scrambles; i++) {
 
             //Looking for zero position...

@@ -2,6 +2,7 @@ package aStar;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  *
@@ -27,6 +28,7 @@ public class AStarTest {
         fringe.add(root);
 
         do {
+            System.out.println("Size of the fringe: " + fringe.size());
             Node node = fringe.remove(0);
             if (node.state.isGoal()) {
                 System.out.println("The solution is: \n" + node.toString());
@@ -35,11 +37,11 @@ public class AStarTest {
                 List<Node> successors = node.successors();
                 for (Node suc : successors) {
                     int fsize = fringe.size(); //This avoids endless for
-                    for (int i = 0; i < fsize; i++) {
-                        PuzzleNode indexNode = (PuzzleNode) fringe.get(i);
-                        if (((PuzzleNode) suc).f() <= ((PuzzleNode) indexNode).f()) {
+                    for (ListIterator<Node> iterator = fringe.listIterator(); iterator.hasNext();) {
+                        if (((PuzzleNode) suc).f() <= ((PuzzleNode) iterator.next()).f()) {
                             if (!fringe.contains(suc)) {
-                                fringe.add(i, suc);
+                                iterator.previous();
+                                iterator.add(suc);
                             }
                         }
                     }
