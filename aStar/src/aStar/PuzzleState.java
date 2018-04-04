@@ -20,9 +20,9 @@ public class PuzzleState extends State {
     //Constructor for the 1st state instance of puzzle
     public PuzzleState() {
         this.description = "Initial State";
-        System.out.println("Sorting puzzle...");
+        System.out.println("Generating puzzle...");
         puzzle = generate();
-        System.out.println("Solvable puzzle sorted!");
+        System.out.println("Solvable puzzle generated!");
         printPuzzle(puzzle);
         this.h = h();
     }
@@ -55,7 +55,7 @@ public class PuzzleState extends State {
         int[] zeroPos = new int[2];
 
         //Variable scrambles indicates the number of moves to scramble the puzzle
-        int scrambles = 10000;
+        int scrambles = 70000;
         for (int i = 0; i < scrambles; i++) {
 
             //Looking for zero position...
